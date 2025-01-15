@@ -6,17 +6,31 @@ body {
 
 #app {
   display: flex;
+  height: 100vh;
 }
 
 #sidebar {
-  width: 250px;
+  width: 30%;
   padding: 1rem;
-  background: #f7f7f7;
+  background: #2c3e50;
+  color: #ecf0f1;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+}
+
+#sidebar h1 {
+  margin-top: 0;
+  text-align: center;
+  color: #3498db;
 }
 
 #main {
   flex: 1;
   padding: 1rem;
+  background: #f7f9fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .task-list {
@@ -29,5 +43,56 @@ body {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background: #fff;
+  background: #ecf0f1;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.task:hover {
+  background-color: #dcdcdc;
+}
+
+.task-details {
+  text-align: left;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.no-task {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+/* Изменяем цвет названия задачи */
+.task h3 {
+  color: #3498db; /* Вы можете заменить этот цвет на любой другой */
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* При наведении */
+.task:hover h3 {
+  color: #1abc9c; /* Цвет при наведении */
+}
+#filter-form {
+  margin-bottom: 20px;
+}
+
+#filter-form p {
+  font-size: 16px;
+  color: #34495e;
+  margin: 0 0 10px;
+}
+
+#filter-form label {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+#filter-form input[type="radio"] {
+  margin-right: 5px;
 }

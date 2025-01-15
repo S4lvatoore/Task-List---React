@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     tasks: JSON.parse(localStorage.getItem("tasks")) || [],
-    filter: "all",
+    filter: "all", // Начальный фильтр
 };
 
 const slice = createSlice({
@@ -12,6 +12,9 @@ const slice = createSlice({
         addTask: (state, action) => {
             state.tasks.unshift(action.payload);
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
+        },
+        setFilter: (state, action) => {
+            state.filter = action.payload; // Обновляем фильтр
         },
         completeTask: (state, action) => {
             const task = state.tasks.find((t) => t.id === action.payload.id);
@@ -23,5 +26,5 @@ const slice = createSlice({
     },
 });
 
-export const { addTask, completeTask } = slice.actions;
+export const { addTask, setFilter, completeTask } = slice.actions;
 export default slice.reducer;
