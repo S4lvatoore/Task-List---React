@@ -13,9 +13,6 @@ const slice = createSlice({
             state.tasks.unshift(action.payload);
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },
-        setFilter: (state, action) => {
-            state.filter = action.payload;
-        },
         completeTask: (state, action) => {
             const task = state.tasks.find((t) => t.id === action.payload.id);
             if (task) {
@@ -23,8 +20,11 @@ const slice = createSlice({
                 localStorage.setItem("tasks", JSON.stringify(state.tasks));
             }
         },
+        setFilter: (state, action) => {
+            state.filter = action.payload;
+        },
     },
 });
 
-export const { addTask, setFilter, completeTask } = slice.actions;
+export const { addTask, completeTask, setFilter } = slice.actions;
 export default slice.reducer;

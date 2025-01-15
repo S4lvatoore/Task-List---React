@@ -1,27 +1,21 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Task from "./Task";
-import { completeTask } from "../redux/slice";
 
-
-function TaskList({onTaskClick}) {
+function TaskList({ onTaskClick }) {
     const { tasks, filter } = useSelector((state) => state.tasksReducer);
-    const dispatch = useDispatch();
 
+    // Фильтруем задачи на основе текущего фильтра
     const filteredTasks = tasks.filter((task) => {
         if (filter === "done") return task.completed;
         if (filter === "undone") return !task.completed;
-        return true;
+        return true; // Показываем все задачи
     });
-
-    const handleToggle = (id) => {
-        dispatch(completeTask({ id }));
-    };
 
     return (
         <div className="task-list">
-            {tasks.length > 0 ? (
-                tasks.map((task) => (
+            {filteredTasks.length > 0 ? (
+                filteredTasks.map((task) => (
                     <Task key={task.id} task={task} onTaskClick={onTaskClick} />
                 ))
             ) : (
@@ -30,5 +24,5 @@ function TaskList({onTaskClick}) {
         </div>
     );
 }
-export default TaskList;
 
+export default TaskList;
