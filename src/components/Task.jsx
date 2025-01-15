@@ -1,24 +1,27 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { completeTask } from "../redux/slice";
+import { toggleTaskCompletion, deleteTask } from "../redux/slice";
 
-function Task({ task, onTaskClick }) {
+function Task({ task, selectTask }) {
     const dispatch = useDispatch();
 
-    const handleCheckboxChange = (e) => {
-        e.stopPropagation(); // Останавливаем всплытие события, чтобы оно не вызвало onTaskClick
-        dispatch(completeTask({ id: task.id })); // Меняем статус задачи
+    const handleCheckboxClick = () => {
+        dispatch(toggleTaskCompletion({ id: task.id }));
+    };
+
+    const handleDeleteClick = () => {
+        dispatch(deleteTask({ id: task.id }));
     };
 
     return (
-        <div className="task" onClick={() => onTaskClick(task)}>
+        <div className="task" onClick={() => selectTask(task)}>
             <input
                 type="checkbox"
                 checked={task.completed}
-                onChange={handleCheckboxChange} // Обработчик изменения
-                style={{ marginRight: "10px" }}
+                onChange={handleCheckboxClick}
             />
-            <h3>{task.title}</h3>
+            <span>{task.title}</span>
+            <button onClick={handleDeleteClick}>Delete</button>
         </div>
     );
 }
