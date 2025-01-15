@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tasksReducer from "./slice"; // Убедитесь, что путь к редюсеру верный
+import tasksReducer from "./slice";
 
 const store = configureStore({
     reducer: {
-        tasksReducer, // Ваш редюсер
+        tasksReducer,
     },
 });
 

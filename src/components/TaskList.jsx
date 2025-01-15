@@ -4,7 +4,7 @@ import Task from "./Task";
 import { completeTask } from "../redux/slice";
 
 
-function TaskList() {
+function TaskList({onTaskClick}) {
     const { tasks, filter } = useSelector((state) => state.tasksReducer);
     const dispatch = useDispatch();
 
@@ -20,9 +20,9 @@ function TaskList() {
 
     return (
         <div className="task-list">
-            {filteredTasks.length > 0 ? (
-                filteredTasks.map((task) => (
-                    <Task key={task.id} task={task} onToggle={handleToggle} />
+            {tasks.length > 0 ? (
+                tasks.map((task) => (
+                    <Task key={task.id} task={task} onTaskClick={onTaskClick} />
                 ))
             ) : (
                 <p>No tasks found.</p>
@@ -30,7 +30,5 @@ function TaskList() {
         </div>
     );
 }
-
-
-
 export default TaskList;
+

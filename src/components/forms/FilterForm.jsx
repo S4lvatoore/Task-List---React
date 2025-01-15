@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setFilter } from "../../redux/slice"; // <-- импортируем
+import { setFilter } from "../../redux/slice";
 
 function FilterForm() {
     const dispatch = useDispatch();
 
     const handleFilterChange = (e) => {
-        const filterValue = e.target.value; // Получаем выбранный фильтр
-        dispatch(setFilter(filterValue)); // Диспатчим новый фильтр
+        const filterValue = e.target.value;
+        dispatch(setFilter(filterValue));
     };
 
     return (
@@ -21,7 +21,7 @@ function FilterForm() {
                         name="filter"
                         value="all"
                         defaultChecked
-                        onChange={handleFilterChange} // Обработчик изменения
+                        onChange={handleFilterChange}
                     />
                     All
                 </label>
@@ -31,7 +31,7 @@ function FilterForm() {
                         type="radio"
                         name="filter"
                         value="done"
-                        onChange={handleFilterChange} // Обработчик изменения
+                        onChange={handleFilterChange}
                     />
                     Done
                 </label>
@@ -41,7 +41,7 @@ function FilterForm() {
                         type="radio"
                         name="filter"
                         value="undone"
-                        onChange={handleFilterChange} // Обработчик изменения
+                        onChange={handleFilterChange}
                     />
                     Undone
                 </label>

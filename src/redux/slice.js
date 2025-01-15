@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     tasks: JSON.parse(localStorage.getItem("tasks")) || [],
-    filter: "all", // Начальный фильтр
+    filter: "all",
 };
 
 const slice = createSlice({
@@ -14,7 +14,7 @@ const slice = createSlice({
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },
         setFilter: (state, action) => {
-            state.filter = action.payload; // Обновляем фильтр
+            state.filter = action.payload;
         },
         completeTask: (state, action) => {
             const task = state.tasks.find((t) => t.id === action.payload.id);
