@@ -1,12 +1,10 @@
 import React from "react";
 
-function Task({ task }) {
+function Task({ task, onClick }) {
     return (
-        <div className="task">
+        <div className="task" onClick={onClick} style={{ cursor: "pointer" }}>
             <div>
                 <h3>{task.title}</h3>
-                <p>{task.description}</p>
-                <p>Status: {task.completed ? "Completed" : "Pending"}</p>
             </div>
         </div>
     );
