@@ -1,11 +1,14 @@
 import React from "react";
 
-function Task({ task, onClick }) {
+function Task({ task, onToggle }) {
     return (
-        <div className="task" onClick={onClick}>
-            <div>
-                <h3>{task.title}</h3>
-            </div>
+        <div className="task">
+            <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => onToggle(task.id)}
+            />
+            <h3>{task.title}</h3>
         </div>
     );
 }
