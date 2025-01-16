@@ -1,71 +1,262 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
+/* Общие настройки */
+html {
+  box-sizing: border-box;
 }
 
-#app {
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #2c3e50;
+  background-color: #f7f9fc;
+  line-height: 1.6;
+}
+
+textarea,
+input,
+button {
+  font-size: 1rem;
+  font-family: inherit;
+  margin: 0;
+}
+
+button {
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+  cursor: pointer;
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+#root {
   display: flex;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 
 #sidebar {
-  width: 30%;
-  padding: 1rem;
-  background: #2c3e50;
+  width: 22rem;
+  background-color: #34495e;
   color: #ecf0f1;
-  overflow-y: auto;
-  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #sidebar h1 {
-  margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ecf0f1;
   text-align: center;
-  color: #3498db;
 }
 
-#main {
+#sidebar > div {
+  margin-bottom: 1.5rem;
+}
+
+#sidebar > div form input[type="search"] {
+  width: 100%;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  background-color: #ecf0f1;
+  font-size: 1rem;
+  color: #2c3e50;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#sidebar > div form input[type="search"]:focus {
+  border-color: #3498db; /* Цвет фокуса */
+  background-color: white;
+}
+
+#sidebar > div form input[type="search"]::placeholder {
+  color: #7f8c8d; /* Мягкий серый для плейсхолдера */
+  font-style: italic;
+}
+
+/* Анимация появления поиска */
+#sidebar > div form input[type="search"] {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#sidebar nav {
   flex: 1;
-  padding: 1rem;
-  background: #f7f9fc;
+  overflow-y: auto;
+}
+
+#sidebar nav a {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#sidebar nav a:hover {
+  background-color: #1abc9c; /* Ярко-зелёный */
+  transform: translateX(5px); /* Лёгкое смещение */
+}
+
+#sidebar nav a.active {
+  background-color: #3498db; /* Активный элемент */
+  color: white;
+}
+
+#detail {
+  flex: 1;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#detail.loading {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .task-list {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 15px; /* Расстояние между задачами */
 }
 
 .task {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #ecf0f1;
-  cursor: pointer;
+  gap: 15px;
+  padding: 10px 15px;
+  border-radius: 8px; /* Округлённые края */
+  background-color: #ecf0f1; /* Светло-серый фон */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .task:hover {
-  background-color: #dcdcdc;
+  transform: translateY(-2px); /* Эффект "подъёма" */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.task-details {
-  text-align: left;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.task button {
+  background-color: #1abc9c; /* Бирюзовый цвет */
+  color: white;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+.task button:hover {
+  background-color: #16a085; /* Более тёмный бирюзовый */
+}
+
+.task a {
+  color: #3498db; /* Синий текст */
+  text-decoration: none;
+}
+
+.task a:hover {
+  text-decoration: underline;
+}
+
+/* Улучшение модального окна */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 500px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
 }
 
-.no-task {
-  font-size: 1.2rem;
-  color: #7f8c8d;
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.modal-content h2 {
+  margin: 0 0 1rem;
+  color: #34495e;
+  text-align: center;
+}
+
+.modal-content label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.modal-content label span {
+  color: #3498db; /* Синий для выделения */
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  border-color: #3498db;
+}
+
+.modal-content button {
+  margin: 10px 5px 0;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.modal-content button:hover {
+  background-color: #2980b9;
 }
