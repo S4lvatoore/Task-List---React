@@ -1,11 +1,14 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 
+const savedTasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
+
 const initialState = {
-    tasks: JSON.parse(localStorage.getItem("tasks")) || [],
+    tasks: savedTasks,
     filter: "all",
 };
 
-const slice = createSlice({
+export const slice = createSlice({
     name: "tasks",
     initialState,
     reducers: {
@@ -14,22 +17,32 @@ const slice = createSlice({
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },
         deleteTask: (state, action) => {
-            const taskId = action.payload.id;
-            state.tasks = state.tasks.filter((task) => task.id !== taskId);
-            localStorage.setItem("tasks", JSON.stringify(state.tasks));
+            const index = state.tasks.findIndex((t) => t.id === action.payload.id);
+            if (index !== -1) {
+                state.tasks.splice(index, 1);
+                localStorage.setItem("tasks", JSON.stringify(state.tasks));
+            }
         },
-        setFilter: (state, action) => {
-            state.filter = action.payload;
+        editTask: (state, action) => {
+            const task = state.tasks.find((t) => t.id === action.payload.id);
+            if (task) {
+                task.title = action.payload.title ?? task.title;
+                task.description = action.payload.description ?? task.description;
+                localStorage.setItem("tasks", JSON.stringify(state.tasks));
+            }
         },
-        toggleTaskCompletion: (state, action) => {
+        completeTask: (state, action) => {
             const task = state.tasks.find((t) => t.id === action.payload.id);
             if (task) {
                 task.completed = !task.completed;
                 localStorage.setItem("tasks", JSON.stringify(state.tasks));
             }
         },
+        setFilter: (state, action) => {
+            state.filter = action.payload;
+        },
     },
 });
 
-export const { addTask, deleteTask, setFilter, toggleTaskCompletion } = slice.actions;
+export const { addTask, deleteTask, editTask, completeTask, setFilter } = slice.actions;
 export default slice.reducer;
