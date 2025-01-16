@@ -1,28 +1,43 @@
-import React from "react";
+import { Form, NavLink, useFetcher } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { toggleTaskCompletion, deleteTask } from "../redux/slice";
+import { completeTask } from "../redux/slice";
+import DeleteForm from "./forms/DeleteForm";
 
-function Task({ task, selectTask }) {
+function Task({ task }) {
+    return (
+        <div className="task">
+            <CheckBox task={task} />
+            <NavLink to={`tasks/${task.id}`}>
+                {task.title ? <>{task.title}</> : <i>No Title</i>}
+            </NavLink>
+            <Form action={`tasks/${task.id}/edit`}>
+                <button type="submit">Edit</button>
+            </Form>
+            <DeleteForm task={task} />
+        </div>
+    );
+}
+
+
+function CheckBox({ task }) {
+    const fetcher = useFetcher();
     const dispatch = useDispatch();
+    let isCompleted = task.completed;
 
-    const handleCheckboxClick = () => {
-        dispatch(toggleTaskCompletion({ id: task.id }));
-    };
-
-    const handleDeleteClick = () => {
-        dispatch(deleteTask({ id: task.id }));
+    const handleClick = (e) => {
+        dispatch(completeTask({ id: task.id }));
     };
 
     return (
-        <div className="task" onClick={() => selectTask(task)}>
-            <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={handleCheckboxClick}
-            />
-            <span>{task.title}</span>
-            <button onClick={handleDeleteClick}>Delete</button>
-        </div>
+        <fetcher.Form method="post" action={`tasks/${task.id}/complete`}>
+            <button
+                name="isCompleted"
+                value={isCompleted ? "true" : "false"}
+                onClick={handleClick}
+            >
+                {isCompleted ? "▣" : "▢"}
+            </button>
+        </fetcher.Form>
     );
 }
 

@@ -1,33 +1,64 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
-import TaskList from "../components/TaskList";
-import FilterForm from "../components/forms/FilterForm";
+import { Outlet, useLoaderData, redirect, useNavigation, } from "react-router-dom";
 import NewForm from "../components/forms/NewForm";
+import { matchSorter } from "match-sorter";
+import TaskList from "../components/TaskList";
+import {getFirstTask, getTasks} from "../tasks";
+import { useSelector } from "react-redux";
+import SearchForm from "../components/forms/SearchForm";
+import FilterForm from "../components/forms/FilterForm";
+import {useMemo, useState} from "react";
+
+export async function action() {
+    const currentTask = await getFirstTask();
+    return redirect(`/tasks/${currentTask.id}/edit`);
+}
+
+export async function loader({ request }) {
+    const url = new URL(request.url);
+    const q = url.searchParams.get("q");
+    const tasks = await getTasks();
+    return { q, tasks: tasks || [] };
+}
+
 
 function Root() {
-    const [selectedTask, setSelectedTask] = useState(null);
+    const [query, setQuery] = useState("");
+    const { tasks } = useSelector((state) => state.tasksReducer);
 
+    const filteredTasks = useMemo(() => {
+        if (!query.trim()) return tasks;
+        return tasks.filter((task) =>
+            task.title.toLowerCase().includes(query.toLowerCase())
+        );
+    }, [tasks, query]);
+
+    const handleSearchChange = (event) => {
+        setQuery(event.target.value);
+    };
 
     return (
-        <div id="app">
+        <>
             <div id="sidebar">
-                <h1>Task Manager</h1>
-                <NewForm/>
-                <FilterForm/>
-                <TaskList selectTask={setSelectedTask}/>
-            </div>
-            <div id="main">
-                {selectedTask ? (
-                    <div className="task-details">
-                        <h3>{selectedTask.title}</h3>
-                        <p>{selectedTask.description}</p>
-                        <p>Status: {selectedTask.completed ? "Completed" : "Pending"}</p>
+                <div>
+                    <FilterForm />
+                    <div>
+                        <input
+                            type="search"
+                            placeholder="Search tasks"
+                            value={query}
+                            onChange={handleSearchChange}
+                        />
                     </div>
-                ) : (
-                    <p>Select a task to see details</p>
-                )}
+                    <NewForm />
+                </div>
+                <nav>
+                    <TaskList tasks={filteredTasks} /> {}
+                </nav>
             </div>
-        </div>
+            <div id="detail">
+                <Outlet />
+            </div>
+        </>
     );
 }
 

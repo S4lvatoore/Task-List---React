@@ -13,6 +13,7 @@ export const slice = createSlice({
     initialState,
     reducers: {
         addTask: (state, action) => {
+
             state.tasks.unshift(action.payload);
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },

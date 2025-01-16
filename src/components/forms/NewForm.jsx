@@ -4,13 +4,18 @@ import AddTaskForm from "./AddTaskForm";
 function NewForm() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <>
-            <button onClick={openModal}>New Task</button>
-            {isModalOpen && <AddTaskForm onClose={closeModal} />}
+            <button onClick={handleOpenModal}>New</button>
+            {isModalOpen && <AddTaskForm onClose={handleCloseModal} />}
         </>
     );
 }

@@ -10,34 +10,48 @@ function AddTaskForm({ onClose }) {
 
     const handleAddTask = async (e) => {
         e.preventDefault();
-        if (!title.trim() || !description.trim()) {
-            alert("Both Title and Description are required!");
+
+        if (!title.trim()) {
+            alert("Title is required!");
+            return;
+        }
+
+        if (!description.trim()) {
+            alert("Description is required!");
             return;
         }
 
         const newTask = await createTask({ title, description });
         dispatch(addTask(newTask));
-        onClose();
+        onClose()
     };
 
     return (
         <div className="modal">
             <div className="modal-content">
-                <h2>Add Task</h2>
+                <h2>Add New Task</h2>
                 <form onSubmit={handleAddTask}>
-                    <input
-                        type="text"
-                        placeholder="Task Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
-                    <textarea
-                        placeholder="Task Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
+                    <div>
+                        <label htmlFor="title">Title:</label>
+                        <input
+                            type="text"
+                            id="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            maxLength={16}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="description">Description:</label>
+                        <textarea
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
                     <button type="submit">Add</button>
                     <button type="button" onClick={onClose}>
                         Cancel

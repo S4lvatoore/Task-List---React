@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 
 export async function getTasks(query) {
     let tasks = JSON.parse(localStorage.getItem("tasks"));
-    if (!tasks) tasks = []; // Убедитесь, что tasks всегда массив
+    if (!tasks) tasks = [];
     if (query) {
         tasks = matchSorter(tasks, query, { keys: ["title", "description"] });
     }

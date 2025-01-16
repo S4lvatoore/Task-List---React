@@ -12,35 +12,40 @@ function FilterForm() {
 
     return (
         <div id="filter-form">
-            <p>Filter tasks by status:</p>
-            <label>
-                <input
-                    type="radio"
-                    name="filter"
-                    value="all"
-                    defaultChecked
-                    onChange={handleFilterChange}
-                />
-                All
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="filter"
-                    value="done"
-                    onChange={handleFilterChange}
-                />
-                Done
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="filter"
-                    value="undone"
-                    onChange={handleFilterChange}
-                />
-                Undone
-            </label>
+            <p>
+                <span>Filter tasks by status:</span>
+                <br />
+                <label>
+                    <input
+                        type="radio"
+                        name="filter"
+                        value="all"
+                        defaultChecked
+                        onChange={handleFilterChange}
+                    />
+                    All
+                </label>
+                <br />
+                <label>
+                    <input
+                        type="radio"
+                        name="filter"
+                        value="done"
+                        onChange={handleFilterChange}
+                    />
+                    Done
+                </label>
+                <br />
+                <label>
+                    <input
+                        type="radio"
+                        name="filter"
+                        value="undone"
+                        onChange={handleFilterChange}
+                    />
+                    Undone
+                </label>
+            </p>
         </div>
     );
 }
